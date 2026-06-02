@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio Hoc Tap</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#f5f0e8;--ink:#1a1209;--accent:#c0392b;--muted:#7a6f5e;--card:#fefcf7;--border:#d4c9b0;--dark:#1a1209;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.7;}
+
+  header{background:var(--dark);color:#f5f0e8;padding:70px 60px 55px;position:relative;overflow:hidden;}
+  header::before{content:'PORTFOLIO';position:absolute;right:-20px;top:50%;transform:translateY(-50%);font-family:'Playfair Display',serif;font-size:140px;font-weight:900;color:rgba(255,255,255,0.04);pointer-events:none;white-space:nowrap;}
+  .hlabel{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:18px;font-weight:500;}
+  header h1{font-family:'Playfair Display',serif;font-size:clamp(30px,5vw,62px);font-weight:700;line-height:1.1;margin-bottom:14px;}
+  header h1 span{color:var(--accent);}
+  .hmeta{font-size:13px;color:rgba(245,240,232,0.5);margin-top:28px;display:flex;gap:28px;flex-wrap:wrap;}
+  .hmeta span{display:flex;align-items:center;gap:8px;}
+  .hmeta span::before{content:'—';color:var(--accent);}
+
+  .pnav{display:flex;background:var(--border);overflow-x:auto;scrollbar-width:none;position:sticky;top:0;z-index:100;}
+  .pnav::-webkit-scrollbar{display:none;}
+  .nbtn{flex:1;min-width:160px;padding:18px 22px;background:transparent;border:none;border-right:1px solid rgba(26,18,9,0.1);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:500;color:var(--muted);transition:all .3s;display:flex;align-items:center;gap:12px;}
+  .nbtn:last-child{border-right:none;}
+  .nbtn.active,.nbtn:hover{background:var(--dark);color:#f5f0e8;}
+  .nbtn .nn{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--accent);line-height:1;}
+
+  main{max-width:1080px;margin:0 auto;padding:56px 40px 90px;}
+
+  .psec{display:none;animation:fi .4s ease;}
+  .psec.active{display:block;}
+  @keyframes fi{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+
+  .shdr{display:flex;align-items:flex-start;gap:28px;margin-bottom:44px;padding-bottom:28px;border-bottom:1px solid var(--border);}
+  .snum{font-family:'Playfair Display',serif;font-size:76px;font-weight:900;color:var(--border);line-height:.85;flex-shrink:0;}
+  .stb h2{font-family:'Playfair Display',serif;font-size:clamp(20px,3vw,30px);font-weight:700;margin-bottom:8px;line-height:1.2;}
+  .stb p{color:var(--muted);font-size:15px;max-width:580px;}
+
+  /* PAGE 1 */
+  .igrid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:28px;}
+  @media(max-width:620px){.igrid{grid-template-columns:1fr;}}
+  .icard{background:var(--card);border:1px solid var(--border);padding:26px 24px;transition:box-shadow .25s;}
+  .icard:hover{box-shadow:0 6px 20px rgba(26,18,9,.07);}
+  .iclbl{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);font-weight:500;margin-bottom:12px;}
+  .icard h3{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;margin-bottom:12px;}
+  .fld{width:100%;padding:10px 14px;background:var(--bg);border:1.5px solid var(--border);font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);outline:none;margin-bottom:10px;transition:border-color .2s;resize:none;}
+  .fld:focus{border-color:var(--accent);}
+  .fld::placeholder{color:var(--muted);font-style:italic;}
+  .idark{background:var(--dark);color:#f5f0e8;padding:26px 30px;}
+  .idark h4{font-family:'Playfair Display',serif;font-size:17px;margin-bottom:12px;}
+  .idark ul{padding-left:20px;font-size:14px;line-height:2.1;color:rgba(245,240,232,.72);}
+  .idark ul li::marker{color:var(--accent);}
+
+  /* PAGE 2 */
+  .plist{display:flex;flex-direction:column;gap:0;}
+  .pcard{display:grid;grid-template-columns:74px 1fr;border:1px solid var(--border);border-bottom:none;background:var(--card);overflow:hidden;transition:box-shadow .2s;}
+  .pcard:last-of-type{border-bottom:1px solid var(--border);}
+  .pcard:hover{box-shadow:0 4px 18px rgba(26,18,9,.08);z-index:1;}
+  .pcn{background:var(--dark);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:22px 0;gap:4px;}
+  .pcn .lbl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(245,240,232,.35);font-weight:500;}
+  .pcn .n{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;color:var(--accent);line-height:1;}
+  .pcb{padding:20px 26px;}
+  .pctag{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-weight:500;margin-bottom:6px;}
+  .pcb h3{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;margin-bottom:8px;line-height:1.3;}
+  .pcb p{font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:12px;}
+  .pcact{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;}
+  .bup{display:inline-flex;align-items:center;gap:7px;padding:8px 15px;background:transparent;border:1.5px solid var(--border);font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:1px;text-transform:uppercase;font-weight:500;color:var(--muted);cursor:pointer;transition:all .2s;}
+  .bup:hover{border-color:var(--accent);color:var(--accent);}
+  .blnk{display:inline-flex;align-items:center;gap:7px;padding:8px 15px;background:var(--dark);border:1.5px solid var(--dark);font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:1px;text-transform:uppercase;font-weight:500;color:#f5f0e8;cursor:pointer;transition:all .2s;}
+  .blnk:hover{background:var(--accent);border-color:var(--accent);}
+  .pnote{background:var(--card);border:1px solid var(--border);border-top:3px solid var(--accent);padding:18px 22px;margin-top:22px;font-size:14px;color:var(--muted);line-height:1.7;}
+  .pnote strong{color:var(--ink);font-weight:500;}
+
+  /* PAGE 3 */
+  .sgrid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:30px;}
+  @media(max-width:620px){.sgrid{grid-template-columns:1fr;}}
+  .scard{background:var(--card);border:1px solid var(--border);padding:26px 22px;}
+  .scard .sci{font-size:28px;margin-bottom:12px;}
+  .scard h3{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;margin-bottom:12px;}
+  .scard textarea{width:100%;min-height:108px;padding:11px 14px;background:var(--bg);border:1.5px solid var(--border);font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);outline:none;resize:vertical;line-height:1.6;transition:border-color .2s;}
+  .scard textarea:focus{border-color:var(--accent);}
+  .scard textarea::placeholder{color:var(--muted);font-style:italic;}
+  .chtitle{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin:34px 0 14px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+  .cklist{list-style:none;display:flex;flex-direction:column;gap:10px;}
+  .cklist li{display:flex;align-items:flex-start;gap:14px;font-size:14px;line-height:1.5;padding:13px 17px;background:var(--card);border:1px solid var(--border);}
+  .cklist li input[type=checkbox]{width:18px;height:18px;accent-color:var(--accent);flex-shrink:0;margin-top:2px;cursor:pointer;}
+  .cklist li label{cursor:pointer;}
+
+  footer{text-align:center;padding:34px;font-size:12px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;border-top:1px solid var(--border);}
+
+  @media(max-width:620px){
+    header{padding:46px 24px 38px;}
+    main{padding:36px 18px 70px;}
+    .shdr{flex-direction:column;gap:6px;}
+    .snum{font-size:44px;}
+    .pcard{grid-template-columns:54px 1fr;}
+    .pcn .n{font-size:22px;}
+  }
+
+  /* SLIDER */
+  .pcard{cursor:pointer;}
+  .pcard:hover .open-hint{color:var(--accent);}
+  .open-hint{font-size:12px;color:var(--muted);letter-spacing:1px;display:block;margin-top:8px;transition:color .2s;}
+  .pc-goal{font-size:13px;color:var(--muted);line-height:1.6;margin-top:6px;}
+
+  .slider-overlay{display:none;flex-direction:column;position:fixed;inset:0;background:rgba(26,18,9,0.97);z-index:1000;animation:fi .3s ease;}
+  .slider-overlay.open{display:flex;}
+
+  .slider-header{display:flex;align-items:flex-start;justify-content:space-between;padding:28px 40px 20px;border-bottom:1px solid rgba(255,255,255,0.1);flex-shrink:0;}
+  .slider-tag{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);font-weight:500;display:block;margin-bottom:6px;}
+  .slider-title{font-family:'Playfair Display',serif;font-size:clamp(16px,2.5vw,24px);font-weight:700;color:#f5f0e8;line-height:1.2;}
+  .slider-close{background:transparent;border:1.5px solid rgba(255,255,255,0.2);color:#f5f0e8;padding:8px 18px;font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;flex-shrink:0;transition:all .2s;}
+  .slider-close:hover{border-color:var(--accent);color:var(--accent);}
+
+  .slider-body{flex:1;display:flex;align-items:center;overflow:hidden;position:relative;}
+  .slides-wrap{flex:1;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;}
+  .slide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:20px 80px;opacity:0;transform:translateX(60px);transition:all .4s cubic-bezier(.4,0,.2,1);pointer-events:none;}
+  .slide.active{opacity:1;transform:translateX(0);pointer-events:auto;}
+  .slide.exit-left{opacity:0;transform:translateX(-60px);}
+  .slide img{max-height:calc(100vh - 200px);max-width:100%;object-fit:contain;border:1px solid rgba(255,255,255,0.08);}
+  .slide-placeholder{color:rgba(245,240,232,0.3);font-size:14px;text-align:center;line-height:2;}
+  .slide-placeholder span{font-size:48px;display:block;margin-bottom:16px;}
+
+  .arr-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(245,240,232,0.08);border:1.5px solid rgba(245,240,232,0.15);color:#f5f0e8;width:44px;height:44px;font-size:18px;cursor:pointer;z-index:10;transition:all .2s;display:flex;align-items:center;justify-content:center;}
+  .arr-btn:hover{background:var(--accent);border-color:var(--accent);}
+  .arr-left{left:12px;}
+  .arr-right{right:12px;}
+
+  .slider-footer{padding:16px 40px 24px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;border-top:1px solid rgba(255,255,255,0.08);}
+  .slide-counter{font-size:12px;color:rgba(245,240,232,0.4);letter-spacing:2px;}
+  .slide-dots{display:flex;gap:8px;}
+  .dot{width:8px;height:8px;border-radius:50%;background:rgba(245,240,232,0.2);cursor:pointer;transition:all .2s;}
+  .dot.active{background:var(--accent);transform:scale(1.2);}
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hlabel">Sản phẩm học tập cuối kỳ</div>
+  <h1>Portfolio <span>Kỹ năng số</span></h1>
+  <div class="hmeta">
+    <span>Họ tên: Nguyễn Huy Du</span>
+    <span>Ngành: Kỹ thuật máy tính</span>
+  </div>
+</header>
+
+<nav class="pnav">
+  <button class="nbtn active" onclick="showPage(1,this)"><span class="nn">1</span> GIỚI THIỆU BẢN THÂN</button>
+  <button class="nbtn" onclick="showPage(2,this)"><span class="nn">2</span> DỰ ÁN HỌC TẬP</button>
+  <button class="nbtn" onclick="showPage(3,this)"><span class="nn">3</span> TỔNG KẾT MÔN HỌC</button>
+</nav>
+
+<main>
+
+  <!-- PAGE 1 -->
+  <section class="psec active" id="page-1">
+    <div class="shdr">
+      <div class="snum">01</div>
+      <div class="stb">
+        <h2>Trang giới thiệu</h2>
+        <p>Giới thiệu ngắn gọn về bản thân, chia sẻ mục tiêu học tập và định hướng phát triển cá nhân của em.</p>
+      </div>
+    </div>
+
+    <div class="igrid">
+      <div class="icard">
+        <div class="iclbl">Thông tin cá nhân</div>
+        <h3>Giới thiệu bản thân</h3>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:2px;letter-spacing:1px;text-transform:uppercase;font-weight:700;">Họ tên</p>
+        <p style="font-size:15px;margin-bottom:12px;">Nguyễn Huy Du</p>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:2px;letter-spacing:1px;text-transform:uppercase;font-weight:700;">Ngành học</p>
+        <p style="font-size:15px;margin-bottom:12px;">Kỹ thuật máy tính</p>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:2px;letter-spacing:1px;text-transform:uppercase;font-weight:700;">Sở thích</p>
+        <p style="font-size:15px;">Tạm thời không có</p>
+      </div>
+      <div class="icard">
+        <div class="iclbl">Định hướng &amp; Mục tiêu</div>
+        <h3>Mục tiêu học tập</h3>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:2px;letter-spacing:1px;text-transform:uppercase;font-weight:700;">Mục tiêu học tập</p>
+        <p style="font-size:15px;margin-bottom:12px;">Nâng cao kỹ năng sử dụng công nghệ và công cụ số.</p>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:2px;letter-spacing:1px;text-transform:uppercase;font-weight:700;">Định hướng phát triển</p>
+        <p style="font-size:15px;">Ứng dụng hiệu quả kỹ năng số vào học tập, công việc.</p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- PAGE 2 -->
+  <section class="psec" id="page-2">
+    <div class="shdr">
+      <div class="snum">02</div>
+      <div class="stb">
+        <h2>Trang dự án</h2>
+        <p>Tổng hợp các bài tập mà em đã hoàn thành trong quá trình học tập môn Nhập môn Công nghệ số và Trí tuệ nhân tạo.</p>
+      </div>
+    </div>
+
+    <!-- DANH SÁCH BÀI -->
+    <div class="plist" id="plist">
+      <div class="pcard" onclick="openSlider(0)">
+        <div class="pcn"><span class="lbl">Bài</span><span class="n">1</span></div>
+        <div class="pcb">
+          <div class="pctag">Bài 1</div>
+          <h3>Máy tính và các thiết bị ngoại vi</h3>
+          <p class="pc-goal"><strong>Mục tiêu:</strong> Rèn luyện kỹ năng tạo, sao chép, di chuyển và quản lý tệp tin, thư mục trên máy tính.</p>
+          <span class="open-hint">Bấm để xem bài làm →</span>
+        </div>
+      </div>
+      <div class="pcard" onclick="openSlider(1)">
+        <div class="pcn"><span class="lbl">Bài</span><span class="n">2</span></div>
+        <div class="pcb">
+          <div class="pctag">Bài 2</div>
+          <h3>Khai thác dữ liệu và thông tin</h3>
+          <p class="pc-goal"><strong>Mục tiêu:</strong> Phát triển khả năng tìm kiếm, đánh giá và lựa chọn nguồn thông tin học thuật đáng tin cậy.</p>
+          <span class="open-hint">Bấm để xem bài làm →</span>
+        </div>
+      </div>
+      <div class="pcard" onclick="openSlider(2)">
+        <div class="pcn"><span class="lbl">Bài</span><span class="n">3</span></div>
+        <div class="pcb">
+          <div class="pctag">Bài 3</div>
+          <h3>Tổng quan về trí tuệ nhân tạo</h3>
+          <p class="pc-goal"><strong>Mục tiêu:</strong> Ứng dụng các công cụ trực tuyến để nâng cao hiệu quả làm việc và cộng tác nhóm.</p>
+          <span class="open-hint">Bấm để xem bài làm →</span>
+        </div>
+      </div>
+      <div class="pcard" onclick="openSlider(3)">
+        <div class="pcn"><span class="lbl">Bài</span><span class="n">4</span></div>
+        <div class="pcb">
+          <div class="pctag">Bài 4</div>
+          <h3>Giao tiếp và hợp tác trong môi trường số</h3>
+          <p class="pc-goal"><strong>Mục tiêu:</strong> Khai thác AI tạo sinh nhằm hỗ trợ xây dựng nội dung và thiết kế sản phẩm sáng tạo.</p>
+          <span class="open-hint">Bấm để xem bài làm →</span>
+        </div>
+      </div>
+      <div class="pcard" onclick="openSlider(4)">
+        <div class="pcn"><span class="lbl">Bài</span><span class="n">5</span></div>
+        <div class="pcb">
+          <div class="pctag">Bài 5</div>
+          <h3>Sáng tạo nội dung số</h3>
+          <p class="pc-goal"><strong>Mục tiêu:</strong> Nâng cao kỹ năng viết prompt rõ ràng để cải thiện chất lượng phản hồi từ AI.</p>
+          <span class="open-hint">Bấm để xem bài làm →</span>
+        </div>
+      </div>
+      <div class="pcard" onclick="openSlider(5)">
+        <div class="pcn"><span class="lbl">Bài</span><span class="n">6</span></div>
+        <div class="pcb">
+          <div class="pctag">Bài 6</div>
+          <h3>An toàn và liêm chính học thuật trong môi trường số</h3>
+          <p class="pc-goal"><strong>Mục tiêu:</strong> Hình thành nhận thức về việc sử dụng AI minh bạch, có trách nhiệm trong học tập.</p>
+          <span class="open-hint">Bấm để xem bài làm →</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDESHOW OVERLAY -->
+    <div class="slider-overlay" id="sliderOverlay">
+      <div class="slider-header">
+        <div class="slider-title-block">
+          <span class="slider-tag" id="sliderTag"></span>
+          <h3 class="slider-title" id="sliderTitle"></h3>
+        </div>
+        <button class="slider-close" onclick="closeSlider()">✕ Đóng</button>
+      </div>
+
+      <div class="slider-body" id="sliderBody"
+           ontouchstart="touchStart(event)"
+           ontouchend="touchEnd(event)">
+        <button class="arr-btn arr-left" onclick="prevSlide()">&#8592;</button>
+        <div class="slides-wrap" id="slidesWrap">
+          <!-- slides injected by JS -->
+        </div>
+        <button class="arr-btn arr-right" onclick="nextSlide()">&#8594;</button>
+      </div>
+
+      <div class="slider-footer">
+        <span class="slide-counter" id="slideCounter"></span>
+        <div class="slide-dots" id="slideDots"></div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- PAGE 3 -->
+  <section class="psec" id="page-3">
+    <div class="shdr">
+      <div class="snum">03</div>
+      <div class="stb">
+        <h2>Trang tổng kết</h2>
+        <p>Tổng kết quá trình thực hiện Portfolio và cảm nghĩ của em về những trải nghiệm, kiến thức đã học được trong suốt môn học.</p>
+      </div>
+    </div>
+
+    <div class="sgrid">
+      <div class="scard">
+        <div class="sci">&#128172;</div>
+        <h3>Trải nghiệm &amp; Cảm nhận</h3>
+        <textarea placeholder="Chia sẻ những trải nghiệm và cảm nhận cá nhân về quá trình thực hiện dự án Portfolio này...">Trong quá trình thực hiện Portfolio, em có cơ hội tiếp cận nhiều công cụ số và AI hỗ trợ học tập. Dự án giúp em rèn luyện tính chủ động, kỹ năng tự học và biết cách ứng dụng công nghệ hiệu quả hơn vào công việc.</textarea>
+      </div>
+      <div class="scard">
+        <div class="sci">&#129504;</div>
+        <h3>Kiến thức &amp; Kỹ năng đã học</h3>
+        <textarea placeholder="Nêu bật những kiến thức và kỹ năng quan trọng nhất mà bạn đã học được...">Em học được cách quản lý tệp tin, đánh giá nguồn học thuật, làm việc nhóm trực tuyến và sử dụng AI hiệu quả. Đồng thời, em nâng cao kỹ năng viết prompt, tìm kiếm thông tin và trình bày nội dung học thuật.</textarea>
+      </div>
+      <div class="scard">
+        <div class="sci">&#11088;</div>
+        <h3>Điểm tâm đắc nhất</h3>
+        <textarea placeholder="Trình bày những điểm bạn cảm thấy tâm đắc nhất trong toàn bộ quá trình...">Điều em tâm đắc nhất là hiểu được AI không chỉ dùng để tìm câu trả lời mà còn hỗ trợ sáng tạo, nghiên cứu và học tập. Việc kết hợp tư duy cá nhân với AI giúp nâng cao hiệu quả làm việc đáng kể.</textarea>
+      </div>
+      <div class="scard">
+        <div class="sci">&#128679;</div>
+        <h3>Thách thức &amp; Bài học</h3>
+        <textarea placeholder="Những thách thức bạn đã gặp phải khi xây dựng Portfolio và bài học rút ra...">Khó khăn lớn nhất là lựa chọn nguồn thông tin đáng tin cậy và kiểm chứng kết quả do AI tạo ra. Qua đó, em nhận ra cần sử dụng AI có trách nhiệm, luôn đánh giá và chỉnh sửa nội dung trước khi sử dụng.</textarea>
+      </div>
+    </div>
+
+  </section>
+
+</main>
+
+<footer>Portfolio Kỹ năng số &nbsp;·&nbsp; Nhập môn Công nghệ số và Nhập môn Trí tuệ nhân tạo &nbsp;·&nbsp; Năm học 2025 – 2026</footer>
+
+
+
+<script src="slides_data.js"></script>
+<script>
+function showPage(num,btn){
+  document.querySelectorAll('.psec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nbtn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+num).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+const assignments = [
+  {tag:'Bài 1', title:'Máy tính và các thiết bị ngoại vi', slides: slidesData ? slidesData[0].slides : []},
+  {tag:'Bài 2', title:'Khai thác dữ liệu và thông tin', slides: slidesData ? slidesData[1].slides : []},
+  {tag:'Bài 3', title:'Tổng quan về trí tuệ nhân tạo', slides: slidesData ? slidesData[2].slides : []},
+  {tag:'Bài 4', title:'Giao tiếp và hợp tác trong môi trường số', slides: slidesData ? slidesData[3].slides : []},
+  {tag:'Bài 5', title:'Sáng tạo nội dung số', slides: slidesData ? slidesData[4].slides : []},
+  {tag:'Bài 6', title:'An toàn và liêm chính học thuật trong môi trường số', slides: slidesData ? slidesData[5].slides : []},
+];
+
+let currentSlide = 0;
+let touchX = 0;
+
+function openSlider(idx) {
+  const a = assignments[idx];
+  document.getElementById('sliderTag').textContent = a.tag;
+  document.getElementById('sliderTitle').textContent = a.title;
+
+  const wrap = document.getElementById('slidesWrap');
+  const dots = document.getElementById('slideDots');
+  wrap.innerHTML = '';
+  dots.innerHTML = '';
+
+  if (a.slides.length === 0) {
+    wrap.innerHTML = '<div class="slide active"><div class="slide-placeholder"><span>📂</span>Chưa có bài làm.<br>Gửi ảnh/file cho mình để chèn vào đây.</div></div>';
+    dots.innerHTML = '';
+    document.getElementById('slideCounter').textContent = '';
+  } else {
+    a.slides.forEach((src, i) => {
+      const s = document.createElement('div');
+      s.className = 'slide' + (i===0?' active':'');
+      s.innerHTML = '<img src="'+src+'" alt="Trang '+(i+1)+'">';
+      wrap.appendChild(s);
+      const d = document.createElement('div');
+      d.className = 'dot'+(i===0?' active':'');
+      d.onclick = () => goToSlide(i);
+      dots.appendChild(d);
+    });
+    updateCounter(0, a.slides.length);
+  }
+
+  currentSlide = 0;
+  document.getElementById('sliderOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeSlider() {
+  document.getElementById('sliderOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function getSlides() { return document.querySelectorAll('.slide'); }
+function getDots()   { return document.querySelectorAll('.dot'); }
+
+function goToSlide(n) {
+  const slides = getSlides();
+  const dots   = getDots();
+  if (!slides.length) return;
+  slides[currentSlide].classList.remove('active');
+  slides[currentSlide].classList.add('exit-left');
+  setTimeout(()=>slides[currentSlide]&&slides[currentSlide].classList.remove('exit-left'),400);
+  currentSlide = (n + slides.length) % slides.length;
+  slides[currentSlide].classList.add('active');
+  dots.forEach((d,i)=>d.classList.toggle('active',i===currentSlide));
+  updateCounter(currentSlide, slides.length);
+}
+
+function nextSlide(){ goToSlide(currentSlide+1); }
+function prevSlide(){ goToSlide(currentSlide-1); }
+
+function updateCounter(cur, total){
+  if(total>0) document.getElementById('slideCounter').textContent=(cur+1)+' / '+total;
+}
+
+function touchStart(e){ touchX = e.changedTouches[0].clientX; }
+function touchEnd(e){
+  const dx = e.changedTouches[0].clientX - touchX;
+  if(Math.abs(dx)>50){ dx<0 ? nextSlide() : prevSlide(); }
+}
+
+document.addEventListener('keydown', e=>{
+  if(!document.getElementById('sliderOverlay').classList.contains('open')) return;
+  if(e.key==='ArrowRight') nextSlide();
+  if(e.key==='ArrowLeft')  prevSlide();
+  if(e.key==='Escape')     closeSlider();
+});
+</script>
+</body>
+</html>
